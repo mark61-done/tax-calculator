@@ -6,74 +6,150 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-    <title>Document</title>
+    <title>Kenya Tax Calculator</title>
+    <style>
+        .card-shadow {
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border: none;
+            border-radius: 10px;
+        }
+        .header-gradient {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .tax-row:hover {
+            background-color: #f8f9fa;
+            transition: background-color 0.3s ease;
+        }
+        .result-highlight {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+    </style>
 </head>
 
-<body>
-    <div class="container" >
-        <div class="text-center my-5">
-            <p>My first tax project</p>
-            <h1>Tax Calculator</h1>
+<body class="bg-light">
+    <div class="container py-5">
+        <!-- Header Section -->
+        <div class="row justify-content-center mb-5">
+            <div class="col-lg-8">
+                <div class="card card-shadow header-gradient text-white py-4">
+                    <div class="card-body text-center">
+                        <p class="lead mb-2 opacity-75">My First Tax Project</p>
+                        <h1 class="display-5 fw-bold mb-3">Kenya Tax Calculator</h1>
+                        <p class="mb-0 opacity-75">Calculate your net salary after all statutory deductions</p>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <form id="tax-form">
-            <div class="mb-3">
-                <label for="exampleInputEmail1" class="form-label">Basic salary</label>
-                <input type="number" class="form-control" id="basic" aria-describedby="emailHelp">
+        <div class="row justify-content-center">
+            <!-- Input Form Section -->
+            <div class="col-lg-6 mb-4">
+                <div class="card card-shadow">
+                    <div class="card-header bg-primary text-white">
+                        <h4 class="mb-0"><i class="fas fa-calculator me-2"></i>Enter Your Details</h4>
+                    </div>
+                    <div class="card-body">
+                        <form id="tax-form">
+                            <div class="mb-3">
+                                <label for="basic" class="form-label fw-semibold">Basic Salary (KSH)</label>
+                                <input type="number" class="form-control form-control-lg" id="basic" 
+                                       placeholder="Enter basic salary" required>
+                                <div class="form-text">Your monthly basic salary before deductions</div>
+                            </div>
+                            <div class="mb-4">
+                                <label for="benefits" class="form-label fw-semibold">Benefits (KSH)</label>
+                                <input type="number" class="form-control form-control-lg" id="benefits" 
+                                       placeholder="Enter benefits" value="0">
+                                <div class="form-text">Additional allowances and benefits</div>
+                            </div>
+                            <button type="submit" class="btn btn-success btn-lg w-100">
+                                <i class="fas fa-calculator me-2"></i>Calculate Tax
+                            </button>
+                        </form>
+                    </div>
+                </div>
             </div>
-            <div class="mb-3">
-                <label for="exampleInputPassword1" class="form-label">Benefits</label>
-                <input type="number" class="form-control" id="benefits">
-            </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
 
-        <div class="mt-5">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col">Tax Category</th>
-                        <th scope="col">Tax Output (KSH)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Gross Salry</td>
-                        <td id="gross"></td>
-                    </tr>
-                    <tr>
-                        <td>NHIF</td>
-                        <td id="nhif"></td>
-                    </tr>
-                    <tr>
-                        <td>NSSF</td>
-                        <td id="nssf"></td>
-                    </tr>
-                    <tr>
-                        <td>NHDF</td>
-                        <td id="nhdf"></td>
-                    </tr>
-                    <tr>
-                        <td>Taxable Income</td>
-                        <td id="taxable"></td>
-                    </tr>
-                    <tr>
-                        <td>PAYE</td>
-                        <td id="paye"></td>
-                    </tr>
-                    <tr>
-                        <td>Net Salary</td>
-                        <td id="net"></td>
-                    </tr>
-                </tbody>
-            </table>
+            <!-- Results Section -->
+            <div class="col-lg-6">
+                <div class="card card-shadow">
+                    <div class="card-header bg-success text-white">
+                        <h4 class="mb-0"><i class="fas fa-chart-bar me-2"></i>Tax Breakdown</h4>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-hover mb-0">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th scope="col" class="ps-4">Tax Category</th>
+                                        <th scope="col" class="text-end pe-4">Amount (KSH)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="tax-row">
+                                        <td class="ps-4 fw-semibold">Gross Salary</td>
+                                        <td class="text-end pe-4 result-highlight" id="gross">-</td>
+                                    </tr>
+                                    <tr class="tax-row">
+                                        <td class="ps-4">NHIF Deduction</td>
+                                        <td class="text-end pe-4" id="nhif">-</td>
+                                    </tr>
+                                    <tr class="tax-row">
+                                        <td class="ps-4">NSSF Deduction</td>
+                                        <td class="text-end pe-4" id="nssf">-</td>
+                                    </tr>
+                                    <tr class="tax-row">
+                                        <td class="ps-4">NHDF Deduction</td>
+                                        <td class="text-end pe-4" id="nhdf">-</td>
+                                    </tr>
+                                    <tr class="tax-row">
+                                        <td class="ps-4">Taxable Income</td>
+                                        <td class="text-end pe-4" id="taxable">-</td>
+                                    </tr>
+                                    <tr class="tax-row">
+                                        <td class="ps-4">PAYE Tax</td>
+                                        <td class="text-end pe-4" id="paye">-</td>
+                                    </tr>
+                                    <tr class="tax-row bg-light fw-bold">
+                                        <td class="ps-4">Net Salary</td>
+                                        <td class="text-end pe-4 text-success" id="net">-</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="card-footer text-muted small">
+                        <i class="fas fa-info-circle me-1"></i> Calculations based on current Kenya tax rates
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <script src="./tax.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
-            crossorigin="anonymous"></script>
+        <!-- Info Section -->
+        <div class="row justify-content-center mt-4">
+            <div class="col-lg-8">
+                <div class="card card-shadow border-warning">
+                    <div class="card-body">
+                        <h5 class="card-title text-warning">
+                            <i class="fas fa-lightbulb me-2"></i>About This Calculator
+                        </h5>
+                        <p class="card-text">
+                            This calculator helps you estimate your net salary after all statutory deductions in Kenya, 
+                            including PAYE, NHIF, NSSF, and NHDF. Enter your basic salary and benefits to see a detailed breakdown.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+
+    <!-- Font Awesome for Icons -->
+    <script src="https://kit.fontawesome.com/your-font-awesome-kit.js" crossorigin="anonymous"></script>
+    <script src="./tax.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
 </body>
 
 </html>
