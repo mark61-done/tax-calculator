@@ -66,11 +66,32 @@ document.getElementById('tax-form').addEventListener('submit', function(event) {
     let nhif=getnhif(gross);
     document.getElementById('nhif').innerHTML=nhif;
 
+    
     function getnssf(gross) {
-        return gross * 0.06;
+        const tierILimit = 7000;  
+        const tierIILimit = 36000; 
+        const rate = 0.06;         
+        
+        let nssf = 0;
+        
+        
+        if (gross > tierILimit) {
+            nssf = tierILimit * rate;
+        } else {
+            nssf = gross * rate;
+        }
+        
+        
+        if (gross > tierILimit) {
+            const tierIIContribution = Math.min(gross, tierIILimit) - tierILimit;
+            nssf += tierIIContribution * rate;
+        }
+        
+        return nssf;
     }
     let nssf=getnssf(gross);
     document.getElementById('nssf').innerHTML=nssf;
+
     function getnhdf(gross) {
         return gross * 0.01;
     }
